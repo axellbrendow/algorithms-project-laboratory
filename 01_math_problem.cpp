@@ -83,8 +83,6 @@ int main()
         {
             cin >> matrix[i][j];
         }
-
-        cout << endl;
     }
 
     cout << getMaximalSubrectangleSum(matrix, matrixSize);
