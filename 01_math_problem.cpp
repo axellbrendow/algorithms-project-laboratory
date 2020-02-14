@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <limits>
 
 using namespace std;
 
@@ -22,32 +21,13 @@ int getMaxSumForElement(int l, int c, vector<vector<int>>& matrix, int matrixSiz
     int maxSum = INT_MIN;
     int sum;
 
-    // Expands vertically
     for (size_t i = l; i < matrixSize; i++)
-    {
-        sum = sumMatrix(matrix, l, c, i, c);
-        maxSum = sum > maxSum ? sum : maxSum;
-    }
+        for (size_t j = c; j < matrixSize; j++)
+        {
+            sum = sumMatrix(matrix, l, c, i, j);
+            maxSum = sum > maxSum ? sum : maxSum;
+        }
 
-    // Expands horizontally.
-    // j = c + 1 skips the 1-length rectangle
-    for (size_t j = c + 1; j < matrixSize; j++)
-    {
-        sum = sumMatrix(matrix, l, c, l, j);
-        maxSum = sum > maxSum ? sum : maxSum;
-    }
-
-    int greatestCoord = l > c ? l : c;
-    int remainingSpace = matrixSize - 1 - greatestCoord;
-
-    // Expands diagonally.
-    // i = 1 skips the 1-length rectangle
-    for (size_t i = 1; i <= remainingSpace; i++)
-    {
-        sum = sumMatrix(matrix, l, c, l + i, c + i);
-        maxSum = sum > maxSum ? sum : maxSum;
-    }
-    
     return maxSum;
 }
 
@@ -57,13 +37,11 @@ int getMaximalSubrectangleSum(vector<vector<int>>& matrix, int matrixSize)
     int sum;
 
     for (size_t i = 0; i < matrixSize; i++)
-    {
         for (size_t j = 0; j < matrixSize; j++)
         {
             sum = getMaxSumForElement(i, j, matrix, matrixSize);
             maxSum = sum > maxSum ? sum : maxSum;
         }
-    }
 
     return maxSum;
 }
@@ -79,10 +57,7 @@ int main()
     {
         matrix[i] = vector<int>(matrixSize);
 
-        for (size_t j = 0; j < matrixSize; j++)
-        {
-            cin >> matrix[i][j];
-        }
+        for (size_t j = 0; j < matrixSize; j++) cin >> matrix[i][j];
     }
 
     cout << getMaximalSubrectangleSum(matrix, matrixSize);
