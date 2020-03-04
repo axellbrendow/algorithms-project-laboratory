@@ -53,6 +53,12 @@ public:
     {
         return node0 >= 0 && node1 >= 0;
     }
+
+    void reset()
+    {
+        node0 = node1 = -1;
+        color = 0;
+    }
 };
 
 template<typename Element = int>
@@ -82,6 +88,15 @@ public:
     }
 
     // Functions
+
+    void reset()
+    {
+        for (auto &&node : nodes) node.reset();
+
+        // for (auto &&edges : matrix)
+        //     for (auto &&edge : edges)
+        //         edge.reset();
+    }
 
     GraphEdges& getEdges(int line)
     {
@@ -121,13 +136,19 @@ public:
         }
     }
 
+    bool areConnected(int node0, int node1)
+    {
+        return getEdge(node0, node1).exists();
+    }
+
     int depthFirstSearchR(int initialVertex)
     {
         int maxComponentSize = 0, componentSize;
 
         for (size_t i = 0; i < numVertices; i++)
         {
-            if (nodes[i].color == GraphNode::Color::white)
+            if (areConnected(initialVertex, i) &&
+                nodes[i].color == GraphNode::Color::white)
             {
                 //
             }
@@ -142,8 +163,10 @@ public:
 
         for (size_t i = 0; i < numVertices; i++)
         {
+            nodes[i].color = Node::Color::gray;
             componentSize = depthFirstSearchR(i);
             if (componentSize > maxComponentSize) componentSize = maxComponentSize;
+            nodes[i].color = Node::Color::black;
         }
 
         return maxComponentSize;
