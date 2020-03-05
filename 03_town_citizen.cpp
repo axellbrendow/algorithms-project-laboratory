@@ -32,6 +32,12 @@ public:
     }
 };
 
+template<typename Element>
+ostream& operator<<(ostream& ostream, Node<Element>& node)
+{
+    return ostream << "{ color: " << node.color << ", element: " << node.element << " }";
+}
+
 class Edge
 {
 public:
@@ -60,6 +66,12 @@ public:
         color = 0;
     }
 };
+
+template<typename Element>
+ostream& operator<<(ostream& ostream, Edge& edge)
+{
+    return ostream << "{ node0: " << edge.node0 << ", node1: " << edge.node1 << ", color: " << edge.color << " }";
+}
 
 template<typename Element = int>
 class Graph
@@ -118,24 +130,6 @@ public:
         for (auto &&node : nodes) node.reset();
     }
 
-    void print()
-    {
-        if (numVertices > 0)
-        {
-            for (size_t i = 0; i < numVertices; i++)
-            {
-                cout << getEdge(i, 0).exists() ? "1" : "0";
-
-                for (size_t j = 1; j < numVertices; j++)
-                {
-                    cout << " " << getEdge(i, j).exists() ? "1" : "0";
-                }
-
-                cout << endl;
-            }
-        }
-    }
-
     bool areConnected(int node0, int node1)
     {
         return getEdge(node0, node1).exists();
@@ -173,6 +167,27 @@ public:
     }
 };
 
+template<typename Element>
+ostream& operator<<(ostream& ostream, Graph<Element>& graph)
+{
+    if (graph.numVertices > 0)
+    {
+        for (size_t i = 0; i < graph.numVertices; i++)
+        {
+            ostream << graph.getEdge(i, 0).exists() ? "1" : "0";
+
+            for (size_t j = 1; j < graph.numVertices; j++)
+            {
+                ostream << " " << graph.getEdge(i, j).exists() ? "1" : "0";
+            }
+
+            ostream << endl;
+        }
+    }
+
+    return ostream;
+}
+
 int main()
 {
     int numOfTestCases, numOfCitizens, numOfPairs, citizen0, citizen1;
@@ -191,8 +206,7 @@ int main()
             graph.createEdge(citizen0, citizen1);
         }
 
-        graph.print();
-        cout << endl;
+        cout << graph << endl;
     }
 
     return 0;
