@@ -137,30 +137,33 @@ public:
 
     int depthFirstSearchR(int initialVertex)
     {
-        int maxComponentSize = 0, componentSize;
+        int componentSize = 1;
 
         for (size_t i = 0; i < numVertices; i++)
         {
             if (areConnected(initialVertex, i) &&
                 nodes[i].color == GraphNode::Color::white)
             {
-                //
+                nodes[i].color == GraphNode::Color::gray;
+                componentSize += depthFirstSearchR(i);
+                nodes[i].color == GraphNode::Color::black;
             }
         }
 
-        return maxComponentSize;
+        return componentSize;
     }
 
     int depthFirstSearch()
     {
+        reset();
         int maxComponentSize = 0, componentSize;
 
         for (size_t i = 0; i < numVertices; i++)
         {
-            nodes[i].color = Node::Color::gray;
+            nodes[i].color = GraphNode::Color::gray;
             componentSize = depthFirstSearchR(i);
-            if (componentSize > maxComponentSize) componentSize = maxComponentSize;
-            nodes[i].color = Node::Color::black;
+            nodes[i].color = GraphNode::Color::black;
+            if (componentSize > maxComponentSize) maxComponentSize = componentSize;
         }
 
         return maxComponentSize;
@@ -206,7 +209,8 @@ int main()
             graph.createEdge(citizen0, citizen1);
         }
 
-        cout << graph << endl;
+        cout << graph.depthFirstSearch() << endl;
+        // cout << graph << endl;
     }
 
     return 0;
