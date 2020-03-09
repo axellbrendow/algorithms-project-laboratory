@@ -25,10 +25,9 @@ public:
 
     // Functions
 
-    void reset()
+    void resetColor()
     {
         color = Color::white;
-        element = Element();
     }
 };
 
@@ -60,10 +59,14 @@ public:
         return node0 >= 0 && node1 >= 0;
     }
 
-    void reset()
+    void resetColor()
+    {
+        color = 0;
+    }
+
+    void resetNodes()
     {
         node0 = node1 = -1;
-        color = 0;
     }
 };
 
@@ -101,13 +104,16 @@ public:
 
     // Functions
 
-    void reset()
+    void resetNodeColors()
     {
-        for (auto &&node : nodes) node.reset();
+        for (auto &&node : nodes) node.resetColor();
+    }
 
-        // for (auto &&edges : matrix)
-        //     for (auto &&edge : edges)
-        //         edge.reset();
+    void resetEdgeColors()
+    {
+        for (auto &&edges : matrix)
+            for (auto &&edge : edges)
+                edge.resetColor();
     }
 
     GraphEdges& getEdges(int line)
@@ -123,11 +129,6 @@ public:
     void createEdge(int line, int column)
     {
         getEdges(line)[column] = Edge(line, column);
-    }
-
-    void resetGraph()
-    {
-        for (auto &&node : nodes) node.reset();
     }
 
     bool areConnected(int node0, int node1)
@@ -155,7 +156,7 @@ public:
 
     int depthFirstSearch()
     {
-        reset();
+        resetNodeColors();
         int maxComponentSize = 0, componentSize;
         for (size_t i = 0; i < numVertices; i++)
         {
