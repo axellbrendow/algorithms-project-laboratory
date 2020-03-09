@@ -144,9 +144,9 @@ public:
             if (areConnected(initialVertex, i) &&
                 nodes[i].color == GraphNode::Color::white)
             {
-                nodes[i].color == GraphNode::Color::gray;
+                nodes[i].color = GraphNode::Color::gray;
                 componentSize += depthFirstSearchR(i);
-                nodes[i].color == GraphNode::Color::black;
+                nodes[i].color = GraphNode::Color::black;
             }
         }
 
@@ -157,7 +157,6 @@ public:
     {
         reset();
         int maxComponentSize = 0, componentSize;
-
         for (size_t i = 0; i < numVertices; i++)
         {
             nodes[i].color = GraphNode::Color::gray;
@@ -207,6 +206,7 @@ int main()
             citizen0 -= 1;
             citizen1 -= 1;
             graph.createEdge(citizen0, citizen1);
+            graph.createEdge(citizen1, citizen0);
         }
 
         cout << graph.depthFirstSearch() << endl;
