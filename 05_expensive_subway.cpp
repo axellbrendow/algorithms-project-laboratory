@@ -45,7 +45,7 @@ class Edge
 public:
     // Constants
 
-    static const int DEFAULT_WEIGHT = INT_MAX;
+    static const int DEFAULT_WEIGHT = INT32_MAX;
     static const int DEFAULT_COLOR = 0;
 
     // Properties
@@ -217,7 +217,7 @@ int main()
 {
     map<string, int> stationsMap;
     string station0, station1;
-    int numOfStations, numOfConnections, weight;
+    int numOfStations, numOfConnections, weight, startStation;
     cin >> numOfStations >> numOfConnections;
     cin.ignore(2, '\n');
 
@@ -237,7 +237,12 @@ int main()
             cin.ignore(2, '\n');
             graph.create2Edges(stationsMap[station0], stationsMap[station1], weight);
         }
-        
+
+        cin >> station0;
+        cin.ignore(2, '\n');
+        startStation = stationsMap[station0];
+
+        cout << graph << endl;
         cin >> numOfStations >> numOfConnections;
     }
 
