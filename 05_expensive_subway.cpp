@@ -18,9 +18,7 @@ public:
 
     // Constructors
     
-    Node(int color, Element element) :
-        color(color), element(element) {}
-
+    Node(int color, Element element) : color(color), element(element) {}
     Node(Element element) : Node(Color::white, element) {}
     Node(Color color) : Node(color, Element()) {}
     Node() : Node(Color::white) {}
@@ -94,11 +92,26 @@ template<typename Element = int>
 class Graph
 {
 public:
+    // Types
+
     typedef Node<Element> GraphNode;
     typedef vector<GraphNode> GraphNodes;
     typedef vector<Edge> GraphEdges;
     typedef vector<GraphEdges> GraphMatrix;
 
+private:
+    void addNodeToPrimTree(int node, vector<int>& nodes, vector<Edge*>& edges)
+    {
+        nodes.push_back(node);
+        GraphEdges& nodeEdges = getEdges(node);
+
+        for (size_t i = 0; i < numVertices; i++)
+        {
+            // if ()
+        }
+    }
+
+public:
     // Properties
 
     GraphNodes nodes;
@@ -158,37 +171,11 @@ public:
         return getEdge(node0, node1).exists();
     }
 
-    int depthFirstSearchR(int initialVertex)
+    int minimumGeneratorTree()
     {
-        int componentSize = 1;
-
-        for (size_t i = 0; i < numVertices; i++)
-        {
-            if (areConnected(initialVertex, i) &&
-                nodes[i].color == GraphNode::Color::white)
-            {
-                nodes[i].color = GraphNode::Color::gray;
-                componentSize += depthFirstSearchR(i);
-                nodes[i].color = GraphNode::Color::black;
-            }
-        }
-
-        return componentSize;
-    }
-
-    int depthFirstSearch()
-    {
-        resetNodeColors();
-        int maxComponentSize = 0, componentSize;
-        for (size_t i = 0; i < numVertices; i++)
-        {
-            nodes[i].color = GraphNode::Color::gray;
-            componentSize = depthFirstSearchR(i);
-            nodes[i].color = GraphNode::Color::black;
-            if (componentSize > maxComponentSize) maxComponentSize = componentSize;
-        }
-
-        return maxComponentSize;
+        vector<int> nodes;
+        vector<Edge*> edges;
+        addNodeToPrimTree(0, nodes, edges);
     }
 };
 
