@@ -29,7 +29,6 @@ int main()
     for (size_t i = 0; i < numTests; i++)
     {
         cin >> timeRange;
-        cout << timeRange << endl;
         timeRange = timeRange % 1500;
         printf("%03d\n", timeRange == 0 ? 0 : fibonnaci(timeRange));
     }
