@@ -129,7 +129,7 @@ private:
 
         if (!edges.empty())
         {
-			// Get a pointer to the edge with the smallest weight
+            // Get a pointer to the edge with the smallest weight
             auto minEdgeIter = min_element(edges.begin(), edges.end(),
                 [](Edge *edge0, Edge *edge1)
                 {
@@ -142,7 +142,7 @@ private:
             bool node0IsInPrimTree = nodeIsInPrimTree(minEdge->node0, nodes);
             bool node1IsInPrimTree = nodeIsInPrimTree(minEdge->node1, nodes);
 
-			// If both edge nodes are in the tree, get another edge
+            // If both edge nodes are in the tree, get another edge
             if (node0IsInPrimTree && node1IsInPrimTree)
                 weight = getSmallestEdgeOfPrimTree(nodes, edges);
 
