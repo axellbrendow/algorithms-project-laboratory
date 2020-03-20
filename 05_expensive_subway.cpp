@@ -108,14 +108,14 @@ private:
 
     void addNodeToPrimTree(int node, vector<int> &nodes, vector<Edge *> &edges)
     {
-        nodes.push_back(node);
+        nodes.push_back(node); // Add node to the tree and some of its edges
         GraphEdges &nodeEdges = getEdges(node);
 
         for (size_t i = 0; i < numVertices; i++)
         {
             Edge &edge = nodeEdges[i];
 
-            if (edge.exists() && (
+            if (edge.exists() && ( // Check if at least 1 edge node is not in the tree
                 !nodeIsInPrimTree(edge.node0, nodes) ||
                 !nodeIsInPrimTree(edge.node1, nodes)
                 ))
@@ -129,6 +129,7 @@ private:
 
         if (!edges.empty())
         {
+			// Get a pointer to the edge with the smallest weight
             auto minEdgeIter = min_element(edges.begin(), edges.end(),
                 [](Edge *edge0, Edge *edge1)
                 {
@@ -136,18 +137,19 @@ private:
                 }
             );
             Edge *minEdge = *minEdgeIter;
-            edges.erase(minEdgeIter);
+            edges.erase(minEdgeIter); // Remove the edge
 
             bool node0IsInPrimTree = nodeIsInPrimTree(minEdge->node0, nodes);
             bool node1IsInPrimTree = nodeIsInPrimTree(minEdge->node1, nodes);
 
+			// If both edge nodes are in the tree, get another edge
             if (node0IsInPrimTree && node1IsInPrimTree)
                 weight = getSmallestEdgeOfPrimTree(nodes, edges);
 
             else
             {
                 weight = minEdge->weight;
-                addNodeToPrimTree(
+                addNodeToPrimTree( // Get the edge node that is not in the tree and add it
                     !node0IsInPrimTree ? minEdge->node0 : minEdge->node1, nodes, edges);
             }
         }
