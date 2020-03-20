@@ -270,7 +270,7 @@ int main()
         for (size_t i = 0; i < numOfStations; i++)
         {
             cin >> station0;
-            stationsMap[station0] = i;
+            stationsMap[station0] = i; // Associate station name with an index
         }
 
         for (size_t i = 0; i < numOfConnections; i++)
@@ -280,9 +280,9 @@ int main()
             graph.create2Edges(stationsMap[station0], stationsMap[station1], weight);
         }
 
-        cin >> station0;
+        cin >> station0; // Read initial station
         cin.ignore(2, '\n');
-        startStation = stationsMap[station0];
+        startStation = stationsMap[station0]; // Get its associated index
 
         minCost = graph.minimumGeneratorTree(startStation);
         
