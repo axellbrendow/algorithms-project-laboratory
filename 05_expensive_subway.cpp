@@ -239,13 +239,23 @@ ostream &operator<<(ostream &ostream, Graph<Element> &graph)
 {
     if (graph.numVertices > 0)
     {
+        cout << " \t";
+        for (size_t i = 0; i < graph.numVertices; i++) cout << i << "\t";
+        cout << endl;
+
         for (size_t i = 0; i < graph.numVertices; i++)
         {
-            ostream << graph.getEdge(i, 0).exists() ? "1" : "0";
+            Edge &edge0 = graph.getEdge(i, 0);
+            ostream << i << "\t";
+            if (edge0.exists()) ostream << edge0.weight;
+            else ostream << "n";
 
             for (size_t j = 1; j < graph.numVertices; j++)
             {
-                ostream << " " << graph.getEdge(i, j).exists() ? "1" : "0";
+                Edge &edge = graph.getEdge(i, j);
+                ostream << "\t";
+                if (edge.exists()) ostream << edge.weight;
+                else ostream << "n";
             }
 
             ostream << endl;
