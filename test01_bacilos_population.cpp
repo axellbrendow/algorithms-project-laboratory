@@ -20,16 +20,32 @@ int fibonnaci(unsigned long long n)
     return currElem;
 }
 
+int digitToInt(char digit) { return digit - '0'; }
+
+unsigned long long takeStrModulo(unsigned long long modulo, string numericStr)
+{
+    int length = numericStr.length();
+    unsigned long long result = 0;
+
+    for (int i = 0; i < length; i++)
+    {
+        result = (result * 10 + digitToInt(numericStr[i])) % modulo;
+    }
+    
+    return result;
+}
+
 int main()
 {
     int numTests;
-    unsigned long long timeRange;
+    string timeRange;
+    unsigned long long timeRangeAsNum;
     cin >> numTests;
 
     for (size_t i = 0; i < numTests; i++)
     {
         cin >> timeRange;
-        timeRange = timeRange % 1500;
-        printf("%03d\n", timeRange == 0 ? 0 : fibonnaci(timeRange));
+        timeRangeAsNum = takeStrModulo(1500, timeRange);
+        printf("%03d\n", timeRangeAsNum == 0 ? 0 : fibonnaci(timeRangeAsNum));
     }
 }
