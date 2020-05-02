@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.js": "javascriptreact",
+        "*.ts": "typescriptreact",
         "array": "cpp",
         "cwchar": "cpp",
         "vector": "cpp",
@@ -16,6 +17,7 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "limits": "cpp"
     }
 }
