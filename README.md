@@ -7,5 +7,5 @@ Repository for the discipline: Algorithms Project Laboratory
 ### Compiling and testing the programs
 
 ```sh
-name=01_math_problem; g++ $name.cpp -o $name.exe; ./$name.exe < $name.txt
+./run.sh 09 # This will run question 09
 ```
