@@ -2,6 +2,7 @@
 #include <vector>
 
 #include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -182,22 +183,22 @@ int findPawnColumn(int line, int startingColumn)
 bool turretCanBeAttacked(int line, int column)
 {
     // Check left
-    for (int i = column - 1; i >= 0; i--)
-    {
-        if (board[line][i] == TURRET)
-            return true;
-        if (board[line][i] == PAWN)
-            break;
-    }
+    // for (int i = column - 1; i >= 0; i--)
+    // {
+    //     if (board[line][i] == TURRET)
+    //         return true;
+    //     if (board[line][i] == PAWN)
+    //         break;
+    // }
 
     // Check right
-    for (int i = column + 1; i < boardSize; i++)
-    {
-        if (board[line][i] == TURRET)
-            return true;
-        if (board[line][i] == PAWN)
-            break;
-    }
+    // for (int i = column + 1; i < boardSize; i++)
+    // {
+    //     if (board[line][i] == TURRET)
+    //         return true;
+    //     if (board[line][i] == PAWN)
+    //         break;
+    // }
 
     // Check up
     for (int i = line - 1; i >= 0; i--)
@@ -209,20 +210,21 @@ bool turretCanBeAttacked(int line, int column)
     }
 
     // Check down
-    for (int i = line + 1; i < boardSize; i++)
-    {
-        if (board[i][column] == TURRET)
-            return true;
-        if (board[i][column] == PAWN)
-            break;
-    }
+    // for (int i = line + 1; i < boardSize; i++)
+    // {
+    //     if (board[i][column] == TURRET)
+    //         return true;
+    //     if (board[i][column] == PAWN)
+    //         break;
+    // }
 
     return false;
 }
 
-void printBoard(int &numTurrets)
+void printBoard(int numTurrets)
 {
-    cout << "SOLUÇÃO ENCONTRADA (n = " << numTurrets << "):" << endl;
+    cout << "BOARD " << boardSize << "x" << boardSize
+         << " (numTurrets = " << numTurrets << ")" << endl;
     for (size_t i = 0; i < boardSize; i++)
     {
         for (size_t j = 0; j < boardSize; j++)
@@ -233,6 +235,13 @@ void printBoard(int &numTurrets)
     }
     cout << "==================" << endl
          << endl;
+}
+
+void changeBoard(int line, int column, char value, int numTurrets)
+{
+    board[line][column] = value;
+    printBoard(numTurrets);
+    system("sleep 0.5; clear");
 }
 
 void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
@@ -247,6 +256,7 @@ void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
             continue;
 
         int startLine = line, startColumn = pawnColumn + 1;
+        // changeBoard(line, i, TURRET, numTurrets);
         board[line][i] = TURRET;
         do
         {
@@ -259,6 +269,7 @@ void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
                 // printBoard(numTurrets);
                 if (numTurrets > maxNumTurrets)
                     maxNumTurrets = numTurrets;
+                // changeBoard(line, i, EMPTY, numTurrets);
                 board[line][i] = EMPTY;
                 return;
             }
