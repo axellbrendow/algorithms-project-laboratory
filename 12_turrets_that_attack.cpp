@@ -298,18 +298,18 @@ void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
     }
 }
 
-// int getMaxNumTurrets_Backtracking()
-// {
-//     int line = -1, column = -1;
-//     discoverPositionForNextTurret(0, 0, line, column);
+int getMaxNumTurrets_Backtracking()
+{
+    int line = -1, column = -1;
+    discoverPositionForNextTurret(0, 0, line, column);
 
-//     if (line == -1 || column == -1)
-//         return 0;
+    if (line == -1 || column == -1)
+        return 0;
 
-//     int maxNumTurrets = 0;
-//     placeTurret(line, column, 0, maxNumTurrets);
-//     return maxNumTurrets;
-// }
+    int maxNumTurrets = 0;
+    placeTurret(line, column, 0, maxNumTurrets);
+    return maxNumTurrets;
+}
 
 int getVertexWithSmallestDegree(vector<int> &vertices)
 {
@@ -452,6 +452,7 @@ int main()
         resetGraph();
         createAllEdgesForTheBoardGraph();
         cout << getMaxNumTurrets_IndependentSet() << endl;
+        // cout << getMaxNumTurrets_Backtracking() << endl;
         cin >> boardSize;
     }
 }
