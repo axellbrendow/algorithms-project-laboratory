@@ -9,6 +9,141 @@
 
 using namespace std;
 
+/*
+         _______                   _____                    _____                    _____                    _____                   _______         
+        /::\    \                 /\    \                  /\    \                  /\    \                  /\    \                 /::\    \        
+       /::::\    \               /::\____\                /::\    \                /::\____\                /::\    \               /::::\    \       
+      /::::::\    \             /:::/    /               /::::\    \              /::::|   |               /::::\    \             /::::::\    \      
+     /::::::::\    \           /:::/    /               /::::::\    \            /:::::|   |              /::::::\    \           /::::::::\    \     
+    /:::/~~\:::\    \         /:::/    /               /:::/\:::\    \          /::::::|   |             /:::/\:::\    \         /:::/~~\:::\    \    
+   /:::/    \:::\    \       /:::/    /               /:::/__\:::\    \        /:::/|::|   |            /:::/  \:::\    \       /:::/    \:::\    \   
+  /:::/    / \:::\    \     /:::/    /               /::::\   \:::\    \      /:::/ |::|   |           /:::/    \:::\    \     /:::/    / \:::\    \  
+ /:::/____/   \:::\____\   /:::/    /      _____    /::::::\   \:::\    \    /:::/  |::|   | _____    /:::/    / \:::\    \   /:::/____/   \:::\____\ 
+|:::|    |     |:::|    | /:::/____/      /\    \  /:::/\:::\   \:::\    \  /:::/   |::|   |/\    \  /:::/    /   \:::\ ___\ |:::|    |     |:::|    |
+|:::|____|     |:::|____||:::|    /      /::\____\/:::/  \:::\   \:::\____\/:: /    |::|   /::\____\/:::/____/     \:::|    ||:::|____|     |:::|    |
+ \:::\   _\___/:::/    / |:::|____\     /:::/    /\::/    \:::\  /:::/    /\::/    /|::|  /:::/    /\:::\    \     /:::|____| \:::\    \   /:::/    / 
+  \:::\ |::| /:::/    /   \:::\    \   /:::/    /  \/____/ \:::\/:::/    /  \/____/ |::| /:::/    /  \:::\    \   /:::/    /   \:::\    \ /:::/    /  
+   \:::\|::|/:::/    /     \:::\    \ /:::/    /            \::::::/    /           |::|/:::/    /    \:::\    \ /:::/    /     \:::\    /:::/    /   
+    \::::::::::/    /       \:::\    /:::/    /              \::::/    /            |::::::/    /      \:::\    /:::/    /       \:::\__/:::/    /    
+     \::::::::/    /         \:::\__/:::/    /               /:::/    /             |:::::/    /        \:::\  /:::/    /         \::::::::/    /     
+      \::::::/    /           \::::::::/    /               /:::/    /              |::::/    /          \:::\/:::/    /           \::::::/    /      
+       \::::/____/             \::::::/    /               /:::/    /               /:::/    /            \::::::/    /             \::::/    /       
+        |::|    |               \::::/    /               /:::/    /               /:::/    /              \::::/    /               \::/____/        
+        |::|____|                \::/____/                \::/    /                \::/    /                \::/____/                 ~~              
+         ~~                       ~~                       \/____/                  \/____/                  ~~                                       
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+      _____                   _______                   _____                    _____          
+     /\    \                 /::\    \                 /\    \                  /\    \         
+    /::\____\               /::::\    \               /::\    \                /::\    \        
+   /:::/    /              /::::::\    \             /::::\    \              /::::\    \       
+  /:::/    /              /::::::::\    \           /::::::\    \            /::::::\    \      
+ /:::/    /              /:::/~~\:::\    \         /:::/\:::\    \          /:::/\:::\    \     
+/:::/____/              /:::/    \:::\    \       /:::/  \:::\    \        /:::/__\:::\    \    
+|::|    |              /:::/    / \:::\    \     /:::/    \:::\    \      /::::\   \:::\    \   
+|::|    |     _____   /:::/____/   \:::\____\   /:::/    / \:::\    \    /::::::\   \:::\    \  
+|::|    |    /\    \ |:::|    |     |:::|    | /:::/    /   \:::\    \  /:::/\:::\   \:::\    \ 
+|::|    |   /::\____\|:::|____|     |:::|    |/:::/____/     \:::\____\/:::/__\:::\   \:::\____\
+|::|    |  /:::/    / \:::\    \   /:::/    / \:::\    \      \::/    /\:::\   \:::\   \::/    /
+|::|    | /:::/    /   \:::\    \ /:::/    /   \:::\    \      \/____/  \:::\   \:::\   \/____/ 
+|::|____|/:::/    /     \:::\    /:::/    /     \:::\    \               \:::\   \:::\    \     
+|:::::::::::/    /       \:::\__/:::/    /       \:::\    \               \:::\   \:::\____\    
+\::::::::::/____/         \::::::::/    /         \:::\    \               \:::\   \::/    /    
+ ~~~~~~~~~~                \::::::/    /           \:::\    \               \:::\   \/____/     
+                            \::::/    /             \:::\    \               \:::\    \         
+                             \::/____/               \:::\____\               \:::\____\        
+                              ~~                      \::/    /                \::/    /        
+                                                       \/____/                  \/____/         
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+          _____                    _____                _____                    _____                    _____                    _____                    _____          
+         /\    \                  /\    \              /\    \                  /\    \                  /\    \                  /\    \                  /\    \         
+        /::\    \                /::\    \            /::\    \                /::\    \                /::\____\                /::\    \                /::\    \        
+       /::::\    \              /::::\    \           \:::\    \               \:::\    \              /:::/    /               /::::\    \              /::::\    \       
+      /::::::\    \            /::::::\    \           \:::\    \               \:::\    \            /:::/    /               /::::::\    \            /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \           \:::\    \               \:::\    \          /:::/    /               /:::/\:::\    \          /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \           \:::\    \               \:::\    \        /:::/____/               /:::/__\:::\    \        /:::/__\:::\    \    
+   /::::\   \:::\    \       \:::\   \:::\    \          /::::\    \              /::::\    \       |::|    |               /::::\   \:::\    \      /::::\   \:::\    \   
+  /::::::\   \:::\    \    ___\:::\   \:::\    \        /::::::\    \    ____    /::::::\    \      |::|    |     _____    /::::::\   \:::\    \    /::::::\   \:::\    \  
+ /:::/\:::\   \:::\    \  /\   \:::\   \:::\    \      /:::/\:::\    \  /\   \  /:::/\:::\    \     |::|    |    /\    \  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\____\ 
+/:::/__\:::\   \:::\____\/::\   \:::\   \:::\____\    /:::/  \:::\____\/::\   \/:::/  \:::\____\    |::|    |   /::\____\/:::/__\:::\   \:::\____\/:::/  \:::\   \:::|    |
+\:::\   \:::\   \::/    /\:::\   \:::\   \::/    /   /:::/    \::/    /\:::\  /:::/    \::/    /    |::|    |  /:::/    /\:::\   \:::\   \::/    /\::/   |::::\  /:::|____|
+ \:::\   \:::\   \/____/  \:::\   \:::\   \/____/   /:::/    / \/____/  \:::\/:::/    / \/____/     |::|    | /:::/    /  \:::\   \:::\   \/____/  \/____|:::::\/:::/    / 
+  \:::\   \:::\    \       \:::\   \:::\    \      /:::/    /            \::::::/    /              |::|____|/:::/    /    \:::\   \:::\    \            |:::::::::/    /  
+   \:::\   \:::\____\       \:::\   \:::\____\    /:::/    /              \::::/____/               |:::::::::::/    /      \:::\   \:::\____\           |::|\::::/    /   
+    \:::\   \::/    /        \:::\  /:::/    /    \::/    /                \:::\    \               \::::::::::/____/        \:::\   \::/    /           |::| \::/____/    
+     \:::\   \/____/          \:::\/:::/    /      \/____/                  \:::\    \               ~~~~~~~~~~               \:::\   \/____/            |::|  ~|          
+      \:::\    \               \::::::/    /                                 \:::\    \                                        \:::\    \                |::|   |          
+       \:::\____\               \::::/    /                                   \:::\____\                                        \:::\____\               \::|   |          
+        \::/    /                \::/    /                                     \::/    /                                         \::/    /                \:|   |          
+         \/____/                  \/____/                                       \/____/                                           \/____/                  \|___|          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+          _____                   _______                   _____                    _____                    _____                    _____                    _____                   _______         
+         /\    \                 /::\    \                 /\    \                  /\    \                  /\    \                  /\    \                  /\    \                 /::\    \        
+        /::\    \               /::::\    \               /::\    \                /::\____\                /::\    \                /::\____\                /::\    \               /::::\    \       
+       /::::\    \             /::::::\    \             /::::\    \              /::::|   |                \:::\    \              /::::|   |               /::::\    \             /::::::\    \      
+      /::::::\    \           /::::::::\    \           /::::::\    \            /:::::|   |                 \:::\    \            /:::::|   |              /::::::\    \           /::::::::\    \     
+     /:::/\:::\    \         /:::/~~\:::\    \         /:::/\:::\    \          /::::::|   |                  \:::\    \          /::::::|   |             /:::/\:::\    \         /:::/~~\:::\    \    
+    /:::/  \:::\    \       /:::/    \:::\    \       /:::/__\:::\    \        /:::/|::|   |                   \:::\    \        /:::/|::|   |            /:::/  \:::\    \       /:::/    \:::\    \   
+   /:::/    \:::\    \     /:::/    / \:::\    \     /::::\   \:::\    \      /:::/ |::|   |                   /::::\    \      /:::/ |::|   |           /:::/    \:::\    \     /:::/    / \:::\    \  
+  /:::/    / \:::\    \   /:::/____/   \:::\____\   /::::::\   \:::\    \    /:::/  |::|___|______    ____    /::::::\    \    /:::/  |::|   | _____    /:::/    / \:::\    \   /:::/____/   \:::\____\ 
+ /:::/    /   \:::\ ___\ |:::|    |     |:::|    | /:::/\:::\   \:::\____\  /:::/   |::::::::\    \  /\   \  /:::/\:::\    \  /:::/   |::|   |/\    \  /:::/    /   \:::\ ___\ |:::|    |     |:::|    |
+/:::/____/     \:::|    ||:::|____|     |:::|    |/:::/  \:::\   \:::|    |/:::/    |:::::::::\____\/::\   \/:::/  \:::\____\/:: /    |::|   /::\____\/:::/____/     \:::|    ||:::|____|     |:::|    |
+\:::\    \     /:::|____| \:::\    \   /:::/    / \::/   |::::\  /:::|____|\::/    / ~~~~~/:::/    /\:::\  /:::/    \::/    /\::/    /|::|  /:::/    /\:::\    \     /:::|____| \:::\    \   /:::/    / 
+ \:::\    \   /:::/    /   \:::\    \ /:::/    /   \/____|:::::\/:::/    /  \/____/      /:::/    /  \:::\/:::/    / \/____/  \/____/ |::| /:::/    /  \:::\    \   /:::/    /   \:::\    \ /:::/    /  
+  \:::\    \ /:::/    /     \:::\    /:::/    /          |:::::::::/    /               /:::/    /    \::::::/    /                   |::|/:::/    /    \:::\    \ /:::/    /     \:::\    /:::/    /   
+   \:::\    /:::/    /       \:::\__/:::/    /           |::|\::::/    /               /:::/    /      \::::/____/                    |::::::/    /      \:::\    /:::/    /       \:::\__/:::/    /    
+    \:::\  /:::/    /         \::::::::/    /            |::| \::/____/               /:::/    /        \:::\    \                    |:::::/    /        \:::\  /:::/    /         \::::::::/    /     
+     \:::\/:::/    /           \::::::/    /             |::|  ~|                    /:::/    /          \:::\    \                   |::::/    /          \:::\/:::/    /           \::::::/    /      
+      \::::::/    /             \::::/    /              |::|   |                   /:::/    /            \:::\    \                  /:::/    /            \::::::/    /             \::::/    /       
+       \::::/    /               \::/____/               \::|   |                  /:::/    /              \:::\____\                /:::/    /              \::::/    /               \::/____/        
+        \::/____/                 ~~                      \:|   |                  \::/    /                \::/    /                \::/    /                \::/____/                 ~~              
+         ~~                                                \|___|                   \/____/                  \/____/                  \/____/                  ~~                                       
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+          _____                    _____                            _____                   _______                   _____          
+         /\    \                  /\    \                          /\    \                 /::\    \                 /\    \         
+        /::\    \                /::\____\                        /::\____\               /::::\    \               /::\____\        
+       /::::\    \              /:::/    /                       /:::/    /              /::::::\    \             /:::/    /        
+      /::::::\    \            /:::/    /                       /:::/    /              /::::::::\    \           /:::/    /         
+     /:::/\:::\    \          /:::/    /                       /:::/    /              /:::/~~\:::\    \         /:::/    /          
+    /:::/__\:::\    \        /:::/    /                       /:::/____/              /:::/    \:::\    \       /:::/    /           
+   /::::\   \:::\    \      /:::/    /                        |::|    |              /:::/    / \:::\    \     /:::/    /            
+  /::::::\   \:::\    \    /:::/    /      _____              |::|    |     _____   /:::/____/   \:::\____\   /:::/    /      _____  
+ /:::/\:::\   \:::\    \  /:::/____/      /\    \             |::|    |    /\    \ |:::|    |     |:::|    | /:::/____/      /\    \ 
+/:::/__\:::\   \:::\____\|:::|    /      /::\____\            |::|    |   /::\____\|:::|____|     |:::|    ||:::|    /      /::\____\
+\:::\   \:::\   \::/    /|:::|____\     /:::/    /            |::|    |  /:::/    / \:::\    \   /:::/    / |:::|____\     /:::/    /
+ \:::\   \:::\   \/____/  \:::\    \   /:::/    /             |::|    | /:::/    /   \:::\    \ /:::/    /   \:::\    \   /:::/    / 
+  \:::\   \:::\    \       \:::\    \ /:::/    /              |::|____|/:::/    /     \:::\    /:::/    /     \:::\    \ /:::/    /  
+   \:::\   \:::\____\       \:::\    /:::/    /               |:::::::::::/    /       \:::\__/:::/    /       \:::\    /:::/    /   
+    \:::\   \::/    /        \:::\__/:::/    /                \::::::::::/____/         \::::::::/    /         \:::\__/:::/    /    
+     \:::\   \/____/          \::::::::/    /                  ~~~~~~~~~~                \::::::/    /           \::::::::/    /     
+      \:::\    \               \::::::/    /                                              \::::/    /             \::::::/    /      
+       \:::\____\               \::::/    /                                                \::/____/               \::::/    /       
+        \::/    /                \::/____/                                                  ~~                      \::/____/        
+         \/____/                  ~~                                                                                 ~~              
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+          _____                    _____                _____                    _____                    _____                            _____            _____          
+         /\    \                  /\    \              /\    \                  /\    \                  /\    \                          /\    \          /\    \         
+        /::\    \                /::\    \            /::\    \                /::\    \                /::\    \                        /::\____\        /::\    \        
+       /::::\    \              /::::\    \           \:::\    \              /::::\    \              /::::\    \                      /:::/    /       /::::\    \       
+      /::::::\    \            /::::::\    \           \:::\    \            /::::::\    \            /::::::\    \                    /:::/    /       /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \           \:::\    \          /:::/\:::\    \          /:::/\:::\    \                  /:::/    /       /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \           \:::\    \        /:::/__\:::\    \        /:::/__\:::\    \                /:::/    /       /:::/__\:::\    \    
+   /::::\   \:::\    \       \:::\   \:::\    \          /::::\    \      /::::\   \:::\    \      /::::\   \:::\    \              /:::/    /       /::::\   \:::\    \   
+  /::::::\   \:::\    \    ___\:::\   \:::\    \        /::::::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \            /:::/    /       /::::::\   \:::\    \  
+ /:::/\:::\   \:::\    \  /\   \:::\   \:::\    \      /:::/\:::\    \  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\____\          /:::/    /       /:::/\:::\   \:::\    \ 
+/:::/__\:::\   \:::\____\/::\   \:::\   \:::\____\    /:::/  \:::\____\/:::/  \:::\   \:::\____\/:::/  \:::\   \:::|    |        /:::/____/       /:::/  \:::\   \:::\____\
+\:::\   \:::\   \::/    /\:::\   \:::\   \::/    /   /:::/    \::/    /\::/    \:::\  /:::/    /\::/   |::::\  /:::|____|        \:::\    \       \::/    \:::\  /:::/    /
+ \:::\   \:::\   \/____/  \:::\   \:::\   \/____/   /:::/    / \/____/  \/____/ \:::\/:::/    /  \/____|:::::\/:::/    /          \:::\    \       \/____/ \:::\/:::/    / 
+  \:::\   \:::\    \       \:::\   \:::\    \      /:::/    /                    \::::::/    /         |:::::::::/    /            \:::\    \               \::::::/    /  
+   \:::\   \:::\____\       \:::\   \:::\____\    /:::/    /                      \::::/    /          |::|\::::/    /              \:::\    \               \::::/    /   
+    \:::\   \::/    /        \:::\  /:::/    /    \::/    /                       /:::/    /           |::| \::/____/                \:::\    \              /:::/    /    
+     \:::\   \/____/          \:::\/:::/    /      \/____/                       /:::/    /            |::|  ~|                       \:::\    \            /:::/    /     
+      \:::\    \               \::::::/    /                                    /:::/    /             |::|   |                        \:::\    \          /:::/    /      
+       \:::\____\               \::::/    /                                    /:::/    /              \::|   |                         \:::\____\        /:::/    /       
+        \::/    /                \::/    /                                     \::/    /                \:|   |                          \::/    /        \::/    /        
+         \/____/                  \/____/                                       \/____/                  \|___|                           \/____/          \/____/         
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+*/
+
 #define MAX_BOARD_SIZE 100
 #define MAX_NUM_VERTICES (MAX_BOARD_SIZE * MAX_BOARD_SIZE)
 #define TURRET 'T'
@@ -20,26 +155,26 @@ char board[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 int boardSize;
 int numVertices;
 
-// void discoverPositionForNextTurret(
-//     int startingLine, int startingColumn, int &line, int &column)
-// {
-//     for (size_t j = startingColumn; j < boardSize; j++)
-//         if (board[startingLine][j] == EMPTY)
-//         {
-//             line = startingLine;
-//             column = j;
-//             return;
-//         }
+void discoverPositionForNextTurret(
+    int startingLine, int startingColumn, int &line, int &column)
+{
+    for (size_t j = startingColumn; j < boardSize; j++)
+        if (board[startingLine][j] == EMPTY)
+        {
+            line = startingLine;
+            column = j;
+            return;
+        }
 
-//     for (size_t i = startingLine + 1; i < boardSize; i++)
-//         for (size_t j = 0; j < boardSize; j++)
-//             if (board[i][j] == EMPTY)
-//             {
-//                 line = i;
-//                 column = j;
-//                 return;
-//             }
-// }
+    for (size_t i = startingLine + 1; i < boardSize; i++)
+        for (size_t j = 0; j < boardSize; j++)
+            if (board[i][j] == EMPTY)
+            {
+                line = i;
+                column = j;
+                return;
+            }
+}
 
 int findPawnColumn(int line, int startingColumn)
 {
@@ -61,111 +196,109 @@ int findPawnLine(int startingLine, int column)
     return pawnLine;
 }
 
-// bool turretCanBeAttacked(int line, int column)
-// {
-//     // Check left
-//     // for (int i = column - 1; i >= 0; i--)
-//     // {
-//     //     if (board[line][i] == TURRET)
-//     //         return true;
-//     //     if (board[line][i] == PAWN)
-//     //         break;
-//     // }
+bool turretCanBeAttacked(int line, int column)
+{
+    // Check left
+    // for (int i = column - 1; i >= 0; i--)
+    // {
+    //     if (board[line][i] == TURRET)
+    //         return true;
+    //     if (board[line][i] == PAWN)
+    //         break;
+    // }
 
-//     // Check right
-//     // for (int i = column + 1; i < boardSize; i++)
-//     // {
-//     //     if (board[line][i] == TURRET)
-//     //         return true;
-//     //     if (board[line][i] == PAWN)
-//     //         break;
-//     // }
+    // Check right
+    // for (int i = column + 1; i < boardSize; i++)
+    // {
+    //     if (board[line][i] == TURRET)
+    //         return true;
+    //     if (board[line][i] == PAWN)
+    //         break;
+    // }
 
-//     // Check up
-//     for (int i = line - 1; i >= 0; i--)
-//     {
-//         if (board[i][column] == TURRET)
-//             return true;
-//         if (board[i][column] == PAWN)
-//             break;
-//     }
+    // Check up
+    for (int i = line - 1; i >= 0; i--)
+    {
+        if (board[i][column] == TURRET)
+            return true;
+        if (board[i][column] == PAWN)
+            break;
+    }
 
-//     // Check down
-//     // for (int i = line + 1; i < boardSize; i++)
-//     // {
-//     //     if (board[i][column] == TURRET)
-//     //         return true;
-//     //     if (board[i][column] == PAWN)
-//     //         break;
-//     // }
+    // Check down
+    // for (int i = line + 1; i < boardSize; i++)
+    // {
+    //     if (board[i][column] == TURRET)
+    //         return true;
+    //     if (board[i][column] == PAWN)
+    //         break;
+    // }
 
-//     return false;
-// }
+    return false;
+}
 
 void printBoard(int numTurrets)
 {
     cout << "BOARD " << boardSize << "x" << boardSize
          << " (numTurrets = " << numTurrets << ")" << endl;
+
     for (size_t i = 0; i < boardSize; i++)
     {
-        for (size_t j = 0; j < boardSize; j++)
-        {
-            cout << board[i][j] << " ";
-        }
+        for (size_t j = 0; j < boardSize; j++) cout << board[i][j] << " ";
         cout << endl;
     }
-    cout << "==================" << endl
-         << endl;
+    cout << "==================" << endl << endl;
 }
 
-// void changeBoard(int line, int column, char value, int numTurrets)
-// {
-//     board[line][column] = value;
-//     printBoard(numTurrets);
-//     system("sleep 0.5; clear");
-// }
+void changeBoard(int line, int column, char value, int numTurrets)
+{
+    board[line][column] = value;
+    printBoard(numTurrets);
+    system("sleep 0.3; clear");
+}
+int num = 0;
+void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
+{
+    // cout << "num: " << num++ << ", line" << line << ", column: " << column << endl;
+    numTurrets++;
+    int pawnColumn = findPawnColumn(line, column + 1);
+    int nextTurretLine, nextTurretColumn;
 
-// void placeTurret(int line, int column, int numTurrets, int &maxNumTurrets)
-// {
-//     numTurrets++;
-//     int pawnColumn = findPawnColumn(line, column + 1);
-//     int nextTurretLine, nextTurretColumn;
+    for (size_t i = column; i < pawnColumn; i++)
+    {
+        if (turretCanBeAttacked(line, i))
+            continue;
 
-//     for (size_t i = column; i < pawnColumn; i++)
-//     {
-//         if (turretCanBeAttacked(line, i))
-//             continue;
+        int startLine = line, startColumn = pawnColumn + 1;
+        // changeBoard(line, i, TURRET, numTurrets);
+        board[line][i] = TURRET;
+        do
+        {
+            nextTurretLine = nextTurretColumn = -1;
+            discoverPositionForNextTurret(
+                startLine, startColumn, nextTurretLine, nextTurretColumn);
 
-//         int startLine = line, startColumn = pawnColumn + 1;
-//         // changeBoard(line, i, TURRET, numTurrets);
-//         board[line][i] = TURRET;
-//         do
-//         {
-//             nextTurretLine = nextTurretColumn = -1;
-//             discoverPositionForNextTurret(
-//                 startLine, startColumn, nextTurretLine, nextTurretColumn);
+            if (nextTurretLine == -1 || nextTurretColumn == -1)
+            {
+                // printBoard(numTurrets);
+                if (numTurrets > maxNumTurrets)
+                    maxNumTurrets = numTurrets;
+                // changeBoard(line, i, EMPTY, numTurrets);
+                board[line][i] = EMPTY;
+                return;
+            }
 
-//             if (nextTurretLine == -1 || nextTurretColumn == -1)
-//             {
-//                 // printBoard(numTurrets);
-//                 if (numTurrets > maxNumTurrets)
-//                     maxNumTurrets = numTurrets;
-//                 // changeBoard(line, i, EMPTY, numTurrets);
-//                 board[line][i] = EMPTY;
-//                 return;
-//             }
+            startLine = nextTurretLine;
+            startColumn = nextTurretColumn + 1;
 
-//             startLine = nextTurretLine;
-//             startColumn = nextTurretColumn + 1;
+        } while (turretCanBeAttacked(nextTurretLine, nextTurretColumn));
 
-//         } while (turretCanBeAttacked(nextTurretLine, nextTurretColumn));
+        placeTurret(nextTurretLine, nextTurretColumn, numTurrets, maxNumTurrets);
+        board[line][i] = EMPTY;
+    }
+}
 
-//         placeTurret(nextTurretLine, nextTurretColumn, numTurrets, maxNumTurrets);
-//         board[line][i] = EMPTY;
-//     }
-// }
-
-// int getMaxNumTurrets()
+// int getMaxNumTurrets_Backtracking()
 // {
 //     int line = -1, column = -1;
 //     discoverPositionForNextTurret(0, 0, line, column);
@@ -211,7 +344,7 @@ void removeNeighboors(int vertex, vector<int> &vertices)
         }
 }
 
-int getMaxNumTurrets()
+int getMaxNumTurrets_IndependentSet()
 {
     // Print board and graph
     // printBoard(0);
@@ -240,20 +373,20 @@ int getMaxNumTurrets()
     while (!vertices.empty()) // Heuristic for the maximum independent set problem
     {
         vertex = getVertexWithSmallestDegree(vertices);
-        if (vertex != -1)
-        {
-            independentVertices.push_back(vertex);
-            vertices.erase(find(vertices.begin(), vertices.end(), vertex));
-            removeNeighboors(vertex, vertices);
-        }
-    }
-
-    // If there are remaining vertices in the `vertices` vector, these vertices
-    // belong to the maximum independent set
-    for (auto &&vertex : vertices)
-    {
+        if (vertex == -1) break;
         independentVertices.push_back(vertex);
         vertices.erase(find(vertices.begin(), vertices.end(), vertex));
+        removeNeighboors(vertex, vertices);
+    }
+
+    vector<int>::iterator vertexItr;
+    // If there are remaining vertices in the `vertices` vector, these vertices
+    // belong to the maximum independent set
+    while (!vertices.empty())
+    {
+        vertexItr = vertices.begin();
+        independentVertices.push_back(*vertexItr);
+        vertices.erase(vertexItr);
     }
 
     return independentVertices.size();
@@ -318,7 +451,7 @@ int main()
 
         resetGraph();
         createAllEdgesForTheBoardGraph();
-        cout << getMaxNumTurrets() << endl;
+        cout << getMaxNumTurrets_IndependentSet() << endl;
         cin >> boardSize;
     }
 }
