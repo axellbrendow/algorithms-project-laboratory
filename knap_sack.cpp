@@ -7,12 +7,12 @@ void printCosts(int cost[], int best[], int object, int knapSackSize)
 {
     // print header
     printf("object array  ");
-    for (size_t i = 0; i < knapSackSize; i++)
+    for (size_t i = 1; i <= knapSackSize; i++)
     {
         printf("%2lu ", i);
     }
     cout << endl;
-    
+
     // print cost array
     printf("%6d cost[]", object);
     for (size_t i = 0; i < knapSackSize; i++)
@@ -20,7 +20,7 @@ void printCosts(int cost[], int best[], int object, int knapSackSize)
         printf(" %2d", cost[i]);
     }
     cout << endl;
-    
+
     // print best array
     printf("%6d best[]", object);
     for (size_t i = 0; i < knapSackSize; i++)
@@ -39,7 +39,7 @@ int knapSack(int knapSackSize, int size[], int val[], int n, int cost[], int bes
         objectSize = size[object];
         objectValue = val[object];
 
-        for (size_t capacity = 0; capacity < knapSackSize; capacity++)
+        for (size_t capacity = 1; capacity <= knapSackSize; capacity++)
         {
             if (capacity >= objectSize)
             {
@@ -69,9 +69,9 @@ int knapSack(int knapSackSize, int size[], int val[], int n, int cost[], int bes
 
 int main()
 {
-    int size[] = {1, 4, 5, 6};
-    int val[] = {1, 5, 6, 8};
-    int knapSackSize = 15;
+    int size[] = {5, 3, 8, 2, 1, 6};
+    int val[] = {100, 120, 25, 40, 50, 60};
+    int knapSackSize = 14;
     int n = sizeof(val) / sizeof(val[0]);
     int cost[knapSackSize];
     int best[knapSackSize];
