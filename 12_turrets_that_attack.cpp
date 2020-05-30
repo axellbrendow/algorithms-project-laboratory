@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include <math.h>
 #include <limits>
 #include <algorithm>
+#include <bits/stdc++.h>
+#include <time.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -179,20 +182,16 @@ void discoverPositionForNextTurret(
 int findPawnColumn(int line, int startingColumn)
 {
     int pawnColumn = startingColumn;
-
     while (pawnColumn < boardSize && board[line][pawnColumn] != PAWN)
         pawnColumn++;
-
     return pawnColumn;
 }
 
 int findPawnLine(int startingLine, int column)
 {
     int pawnLine = startingLine;
-
     while (pawnLine < boardSize && board[pawnLine][column] != PAWN)
         pawnLine++;
-
     return pawnLine;
 }
 
@@ -311,84 +310,121 @@ int getMaxNumTurrets_Backtracking()
     return maxNumTurrets;
 }
 
-int getVertexWithSmallestDegree(vector<int> &vertices)
+int getVertexDegree(int vertex)
 {
-    int bestVertex = -1, degree, smallestDegree = INT32_MAX;
-
-    for (auto &&vertex : vertices)
-    {
-        degree = 0;
-
-        for (size_t i = 0; i < numVertices; i++)
-            if (graph[vertex][i]) degree++;
-
-        if (degree != 0 && degree < smallestDegree)
-        {
-            smallestDegree = degree;
-            bestVertex = vertex;
-        }
-    }
-    
-    return bestVertex;
+    int degree = 0;
+    for (size_t j = 0; j < numVertices; j++)
+        if (graph[vertex][j]) degree++;
+    return degree;
 }
 
-void removeNeighboors(int vertex, vector<int> &vertices)
+typedef struct {
+    size_t index;
+    int degree;
+} Vertex;
+
+void removeNeighboors(int vertex, vector<Vertex> &vertices)
 {
     for (size_t i = 0; i < numVertices; i++)
         if (graph[vertex][i]) // Check if the vertex `i` is a neighboor of `vertex`
         {
+            graph[vertex][i] = graph[i][vertex] = false;
+
             for (size_t j = 0; j < numVertices; j++) // Remove all edges from `i`
-                graph[i][j] = graph[j][i] = false;
+            {
+                if (graph[j][i]) // Check edge with neighboors of `i`
+                {
+                    auto neighboorItr = find_if(vertices.begin(), vertices.end(),
+                        [j](Vertex &vertexObj){
+                            return vertexObj.index == j;
+                        }
+                    );
+                    if (neighboorItr != vertices.end()) neighboorItr->degree--;
+                    graph[i][j] = graph[j][i] = false;
+                }
+            }
             
-            vertices.erase(find(vertices.begin(), vertices.end(), i));
+            vertices.erase(find_if(vertices.begin(), vertices.end(),
+                [i](Vertex &vertexObj) {
+                    return vertexObj.index == i;
+                }
+            ));
         }
 }
 
-int getMaxNumTurrets_IndependentSet()
+void initVariables(vector<Vertex> &vertices, int &indexSmallestDegree)
 {
-    // Print board and graph
-    // printBoard(0);
-
-    // cout << "GRAPH" << endl;
-    // for (size_t i = 0; i < numVertices; i++)
-    // {
-    //     for (size_t j = 0; j < numVertices; j++) cout << graph[i][j] << " ";
-    //     cout << endl;
-    // }
-    // cout << endl;
-
-    vector<int> vertices;
+    int degree, smallestDegree = INT32_MAX;
     // Get all vertices that represent an empty position in the board
     for (size_t i = 0; i < numVertices; i++)
     {
         int line = i / boardSize;
         int column = i % boardSize;
-        if (board[line][column] == EMPTY) vertices.push_back(i);
+        if (board[line][column] == EMPTY)
+        {
+            degree = getVertexDegree(i);
+            if (degree < smallestDegree)
+            {
+                smallestDegree = degree;
+                indexSmallestDegree = vertices.size();
+            }
+            vertices.push_back(Vertex{i, degree});
+        }
     }
-    
-    int vertex;
-    vector<int> independentVertices; // To store the maximum independent set of vertices.
-    independentVertices.reserve((int) ceil(numVertices * 0.3));
+}
 
-    while (!vertices.empty()) // Heuristic for the maximum independent set problem
-    {
-        vertex = getVertexWithSmallestDegree(vertices);
-        if (vertex == -1) break;
-        independentVertices.push_back(vertex);
-        vertices.erase(find(vertices.begin(), vertices.end(), vertex));
-        removeNeighboors(vertex, vertices);
-    }
-
-    vector<int>::iterator vertexItr;
+void getRemainingVertices(vector<Vertex> &vertices, vector<int> &independentVertices)
+{
+    vector<Vertex>::iterator vertexItr;
     // If there are remaining vertices in the `vertices` vector, these vertices
     // belong to the maximum independent set
     while (!vertices.empty())
     {
         vertexItr = vertices.begin();
-        independentVertices.push_back(*vertexItr);
+        independentVertices.push_back(vertexItr->index);
         vertices.erase(vertexItr);
     }
+}
 
+void printGraph()
+{
+    cout << "GRAPH" << endl;
+    for (size_t i = 0; i < numVertices; i++)
+    {
+        for (size_t j = 0; j < numVertices; j++) cout << graph[i][j] << " ";
+        cout << endl;
+    }
+    cout << endl;
+}
+
+int getMaxNumTurrets_IndependentSet()
+{
+    // printBoard(0);
+    // printGraph();
+    vector<Vertex> vertices;
+    vertices.reserve(numVertices);
+    int indexSmallestDegree;
+    initVariables(vertices, indexSmallestDegree);
+    
+    int vertex;
+    auto smallestVertexItr = vertices.begin() + indexSmallestDegree;
+    vector<int> independentVertices; // To store the maximum independent set of vertices.
+    independentVertices.reserve((int) ceil(numVertices * 0.3));
+
+    // Heuristic for the maximum independent set problem
+    while (!vertices.empty() && smallestVertexItr->degree != 0)
+    {
+        vertex = smallestVertexItr->index;
+        independentVertices.push_back(vertex);
+        vertices.erase(smallestVertexItr);
+        removeNeighboors(vertex, vertices);
+        smallestVertexItr = min_element(vertices.begin(), vertices.end(),
+            [](Vertex &vertex0, Vertex &vertex1){
+                return vertex0.degree < vertex1.degree;
+            }
+        );
+    }
+    getRemainingVertices(vertices, independentVertices);
     return independentVertices.size();
 }
 
@@ -435,6 +471,7 @@ void createAllEdgesForTheBoardGraph()
 
 int main()
 {
+        // auto start = chrono::steady_clock::now();
     string boardLine;
     cin >> boardSize;
 
@@ -448,11 +485,21 @@ int main()
             for (size_t j = 0; j < boardSize; j++)
                 board[i][j] = boardLine[j];
         }
-
+        
+        // auto start = chrono::steady_clock::now();
         resetGraph();
         createAllEdgesForTheBoardGraph();
         cout << getMaxNumTurrets_IndependentSet() << endl;
         // cout << getMaxNumTurrets_Backtracking() << endl;
+        // auto end = chrono::steady_clock::now();
+        // cout << "Elapsed time in seconds : "
+		// << chrono::duration_cast<chrono::seconds>(end - start).count()
+		// << " sec" << endl;
+
         cin >> boardSize;
     }
+        // auto end = chrono::steady_clock::now();
+        // cout << "Elapsed time in seconds : "
+		// << chrono::duration_cast<chrono::seconds>(end - start).count()
+		// << " sec" << endl;
 }
