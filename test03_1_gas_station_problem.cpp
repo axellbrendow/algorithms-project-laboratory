@@ -22,11 +22,15 @@ KLEITOS PAPADOPOULOS AND DEMETRES CHRISTOFIDES. A FAST ALGORITHM FOR THE GAS STA
 #define UNDEFINED -1
 #define MAX_NUM_CITIES 10
 
-int graph[MAX_NUM_CITIES][MAX_NUM_CITIES];
-
 using namespace std;
 
-void printGraph(int numCities)
+int graph[MAX_NUM_CITIES][MAX_NUM_CITIES];
+int numCities;
+int U;
+int c[MAX_NUM_CITIES];
+vector<vector<int>> memoTable;
+
+void printGraph()
 {
     for (size_t i = 0; i < numCities; i++)
     {
@@ -35,7 +39,7 @@ void printGraph(int numCities)
     }
 }
 
-void clearGraph(int numCities)
+void clearGraph()
 {
     for (size_t i = 0; i < numCities; i++)
         for (size_t j = 0; j < numCities; j++)
@@ -44,7 +48,7 @@ void clearGraph(int numCities)
     for (size_t i = 0; i < numCities; i++) graph[i][i] = 0;
 }
 
-void floydWarshall(int numCities)
+void floydWarshall()
 {
     for (size_t k = 0; k < numCities; k++)
         for (size_t i = 0; i < numCities; i++)
@@ -52,83 +56,52 @@ void floydWarshall(int numCities)
                 graph[i][l] = min(graph[i][l], graph[i][k] + graph[k][l]);
 }
 
-/** Dynamic Programming approach to gas station problem */
-int gasStationDP(
-    int vertex,
-    int numCities,
-    int capacity,
-    int costsPerLiterOfFuel[],
-    vector<vector<int>> &startingFuelsForAllVertices,
-    vector<vector<int>> &memoTable)
+int gasStationDP(int u, int g)
 {
-    auto costPerLiterOfFuelForMe = costsPerLiterOfFuel[vertex];
-    auto &startingFuelsForMe = startingFuelsForAllVertices[vertex];
-    int cost, minCost = INT32_MAX;
-
-    for (size_t i = 0; i < startingFuelsForMe.size(); i++)
-    {
-        auto startingFuelForMe = startingFuelsForMe[i];
-        cost = memoTable[vertex][startingFuelForMe];
-        if (cost == UNDEFINED)
+    if (u == numCities - 1) g = 0;
+    int cost = memoTable[u][g], minCost = INT32_MAX;
+    
+    if (cost == UNDEFINED)
+        for (size_t v = u + 1; v < numCities; v++)
         {
-            for (size_t j = vertex + 1; j < numCities; j++)
+            cost = INT32_MAX;
+            if (graph[u][v] > U) continue;
+            if (c[v] > c[u])
             {
-                if (j == vertex) continue;
-                if (costsPerLiterOfFuel[j] > costPerLiterOfFuelForMe)
-                {
-                    startingFuelsForAllVertices[j].push_back(capacity - graph[vertex][j]);
-                    cost = gasStationDP(j, numCities, capacity, costsPerLiterOfFuel,
-                        startingFuelsForAllVertices, memoTable)
-                        + (capacity - startingFuelForMe) * costPerLiterOfFuelForMe;
-                }
-
-                else if (startingFuelForMe <= graph[vertex][j] || j == numCities - 1)
-                    cost = gasStationDP(j, numCities, capacity, costsPerLiterOfFuel,
-                        startingFuelsForAllVertices, memoTable)
-                        + (graph[vertex][j] - startingFuelForMe) * costPerLiterOfFuelForMe;
+                // printf("->u: '%d', c[u]: '%3d',\tv: '%d',\tc[v]: '%2d',  d[u][v]: '%2d',  g: '%3d',  refuel: '%3d',\tminCost: '%3d'\n", u, c[u], v, c[v], graph[u][v], g, U - g, minCost);
+                cost = gasStationDP(v, U - graph[u][v]) + (U - g) * c[u];
             }
+
+            else if (g >= graph[u][v])
+            {
+                // printf("->u: '%d', c[u]: '%3d',\tv: '%d',\tc[v]: '%2d',  d[u][v]: '%2d',  g: '%3d',  refuel: '%3d',\tminCost: '%3d'\n", u, c[u], v, c[v], graph[u][v], g, 0, minCost);
+                cost = gasStationDP(v, g - graph[u][v]);
+            }
+
+            else
+            {
+                int refuel = graph[u][v] - g;
+                // printf("->u: '%d', c[u]: '%3d',\tv: '%d',\tc[v]: '%2d',  d[u][v]: '%2d',  g: '%3d',  refuel: '%3d',\tminCost: '%3d'\n", u, c[u], v, c[v], graph[u][v], g, refuel, minCost);
+                cost = gasStationDP(v, 0) + refuel * c[u];
+            }
+
+            if (cost >= 0 && cost < minCost) minCost = cost;
+            // printf("<-u: '%d', c[u]: '%3d',\tv: '%d',\tc[v]: '%2d',  d[u][v]: '%2d',  g: '%3d',  \t\tminCost: '%3d'\n", u, c[u], v, c[v], graph[u][v], g, minCost);
         }
-        // printf("cost = %d, vertex = %d, startingFuelForMe = %d\n", cost, vertex, startingFuelForMe);
-        if (cost < minCost) minCost = cost;
-    }
 
-    return minCost;
-}
-
-void getStartingFuelsForAllVertices(
-    vector<vector<int>> &startingFuelsForAllVertices,
-    int numCities,
-    int capacity,
-    int costsPerLiterOfFuel[]
-)
-{
-    for (size_t vertex = 0; vertex < numCities - 1; vertex++)
-    {
-        auto vertexCostPerLiterOfFuel = costsPerLiterOfFuel[vertex];
-        auto &startingFuels = startingFuelsForAllVertices[vertex];
-
-        // Our car can start with 0 of fuel on all vertices except first.
-        if (vertex == 0) startingFuels.push_back(capacity);
-        else startingFuels.push_back(0);
-
-        for (size_t i = 0; i < numCities; i++)
-            if (costsPerLiterOfFuel[i] < vertexCostPerLiterOfFuel
-                && graph[i][vertex] <= capacity)
-            {
-                startingFuels.push_back(capacity - graph[i][vertex]);
-            }
-    }
-    startingFuelsForAllVertices[numCities - 1].push_back(0);
+    else minCost = cost;
+    return memoTable[u][g] = minCost;
 }
 
 int main()
 {
-    int numCities, numRoads, capacity;
-    cin >> numCities >> numRoads >> capacity;
-
-    while (numCities != 0 || numRoads != 0 || capacity != 0)
+    int numRoads;
+    cin >> numCities >> numRoads >> U;
+    // int i = 0;
+    while (numCities != 0 || numRoads != 0 || U != 0)
     {
-        clearGraph(numCities);
+        // printf("#### CASE %d, numCities: %d, numRoads: %d, capacity: %d ####\n", i++, numCities, numRoads, U);
+        clearGraph();
 
         for (size_t i = 0; i < numRoads; i++)
         {
@@ -139,29 +112,23 @@ int main()
         }
 
         /** Each city price per liter */
-        int costsPerLiterOfFuel[numCities];
+        for (size_t i = 0; i < numCities; i++) cin >> c[i];
 
-        for (size_t i = 0; i < numCities; i++)
-            cin >> costsPerLiterOfFuel[i];
-
-        floydWarshall(numCities); // Use floyd to create complete graph
-        if (graph[0][numCities - 1] == INFTY)
+        floydWarshall(); // Use floyd to create complete graph
+        // printGraph();
+        if (graph[0][numCities - 1] == INFTY) // There's no path to the last vertex
         {
             cout << "-1" << endl;
-            cin >> numCities >> numRoads >> capacity;
+            cin >> numCities >> numRoads >> U;
             continue;
         }
 
-        vector<vector<int>> startingFuelsForAllVertices(numCities, vector<int>());
-        getStartingFuelsForAllVertices(startingFuelsForAllVertices,
-            numCities, capacity, costsPerLiterOfFuel);
-
-        vector<vector<int>> memoTable(numCities, vector<int>(capacity + 1, UNDEFINED));
+        memoTable = vector<vector<int>>(numCities, vector<int>(U + 1, UNDEFINED));
         memoTable[numCities - 1][0] = 0;
 
-        cout << gasStationDP(0, numCities, capacity, costsPerLiterOfFuel,
-            startingFuelsForAllVertices, memoTable) << endl;
+        int cost = gasStationDP(0, U);
+        cout << (cost == INT32_MAX ? -1 : cost) << endl;
         
-        cin >> numCities >> numRoads >> capacity;
+        cin >> numCities >> numRoads >> U;
     }
 }
