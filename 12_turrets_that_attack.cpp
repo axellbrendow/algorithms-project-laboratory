@@ -403,9 +403,10 @@ int getMaxNumTurrets_IndependentSet()
     // printGraph();
     vector<Vertex> vertices;
     vertices.reserve(numVertices);
-    int indexSmallestDegree;
+    int indexSmallestDegree = -1;
     initVariables(vertices, indexSmallestDegree);
-    
+    if (indexSmallestDegree == -1) return 0;
+
     int vertex;
     auto smallestVertexItr = vertices.begin() + indexSmallestDegree;
     vector<int> independentVertices; // To store the maximum independent set of vertices.
