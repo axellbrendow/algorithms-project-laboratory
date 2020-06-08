@@ -175,7 +175,7 @@ bool DFS(int columnPiece, bool visited[], int columnPieces[])
 
 int getMaxNumTurrets_MaximumMatching()
 {
-    // columnPieces[i] means column piece number associated with line piece i
+    // columnPieces[i] means column piece associated with line piece i
     // -1 indicates that line piece i has no column piece associated
     int columnPieces[numLinePieces];
 
@@ -186,7 +186,7 @@ int getMaxNumTurrets_MaximumMatching()
     int result = 0;
     for (int columnPiece = 0; columnPiece < numColumnPieces; columnPiece++)
     {
-        // Mark all line pieces as not visited by a column piece
+        // Mark all line pieces as not visited
         bool visited[numLinePieces];
         memset(visited, 0, sizeof(visited));
 
