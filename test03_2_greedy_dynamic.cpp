@@ -42,20 +42,18 @@ int dynamic()
     int minBlocksForLength[lengthToGet + 1];
     fill(minBlocksForLength, minBlocksForLength + lengthToGet + 1, 0);
 
+    int minNumBlocks, numBlocksAddingBlockI;
     for (size_t currLengthToGet = 1; currLengthToGet <= lengthToGet; currLengthToGet++)
     {
-        int minNumBlocks = currLengthToGet;
+        minNumBlocks = currLengthToGet;
 
         for (size_t i = 1; i < numBlocks; i++)
-        {
             if (currLengthToGet >= blocksLength[i])
             {
-                if (minBlocksForLength[currLengthToGet - blocksLength[i]] + 1 < minNumBlocks)
-                {
-                    minNumBlocks = minBlocksForLength[currLengthToGet - blocksLength[i]] + 1;
-                }
+                numBlocksAddingBlockI = minBlocksForLength[currLengthToGet - blocksLength[i]] + 1;
+
+                if (numBlocksAddingBlockI < minNumBlocks) minNumBlocks = numBlocksAddingBlockI;
             }
-        }
 
         minBlocksForLength[currLengthToGet] = minNumBlocks;
     }
