@@ -4,6 +4,13 @@
 #include <map>
 #include <algorithm>
 
+/*
+REFERENCES:
+
+https://onlinejudge.org/external/117/11710.pdf
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=117&page=show_problem&problem=2757
+*/
+
 using namespace std;
 
 template <typename Element = int>
